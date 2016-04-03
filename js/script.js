@@ -3,24 +3,41 @@
  */
 jQuery(document).ready(function($){
 
+    // show header
+    $('.header-container').animate({
+        opacity: 1
+    },3000);
+
+
+    // if down arrow is clicked
+    $(".down-arrow").click(function(){
+        $('html,body').animate({
+            scrollTop: $(".about").offset().top - 100
+        },'slow');
+    });
 
     $( window ).scroll( function( ) {
-        var loadHeight = jQuery( document ).height( ) - jQuery( window ).height();
-        if( jQuery( window ).scrollTop() <= loadHeight  &&   jQuery( window ).scrollTop() > 1) {
-            $('.content-container').css('visibility','visible');
-        }else {
-            $('.content-container').css('visibility','hidden');
+
+        // hide element 
+        if($(window).scrollTop() == 0){
+            $(".self-img").css('opacity',0);
+            $(".about-text").css('opacity',0);
         }
-    } );
 
-    // ======= skills
-
-    // percent = 0.9;
-    // add_width = (percent*$('.percentage').parent().width())+'px';
-    // $('.percentage').animate({'width': '+='+add_width}, 3000,"linear");
-
-    $(window).scroll(function(){
-        if(checkVisible($(".content-skills"))){
+        // if about box is visible
+        if(checkVisible($(".about"))){
+            $('.self-img').animate({
+                opacity: 1,
+                right:0
+            },1000);
+            $('.about-text').animate({
+                opacity: 1,
+                left:0
+            },1000);
+        }
+        
+        // if skills box is visible
+        if(checkVisible($(".skills-content"))){
            $(".percentage-text").each(function(i,elem){
                 percentage = $(elem).find('input').val();
                 $({ Counter: 0 }).animate({ Counter: percentage}, {
@@ -34,8 +51,21 @@ jQuery(document).ready(function($){
                 }); 
             });
         }
-       
-    });
+        
+        if(checkVisible($(".contact-me"))){
+             $('.left-content').animate({
+                opacity: 1,
+                right:25
+            },1000);
+            $('.right-content').animate({
+                opacity: 1,
+                left:25
+            },1000);
+        }
+
+        
+    } );
+
      
     function checkVisible( elm, eval ) {
         eval = eval || "visible";
