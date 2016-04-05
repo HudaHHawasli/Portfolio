@@ -51,7 +51,8 @@ jQuery(document).ready(function($){
                 }); 
             });
         }
-        
+
+        // if contace me box is visible
         if(checkVisible($(".contact-me"))){
              $('.left-content').animate({
                 opacity: 1,
@@ -95,7 +96,7 @@ jQuery(document).ready(function($){
 
     setInterval(function(){
         left_slide(current_slide); 
-    },5000);
+    },20000);
 
     function left_slide(slide){
         // if we didn't reach the last slide yet
