@@ -19,51 +19,54 @@ jQuery(document).ready(function($){
     $( window ).scroll( function( ) {
 
         // hide element 
-        if($(window).scrollTop() == 0){
-            $(".self-img").css('opacity',0);
-            $(".about-text").css('opacity',0);
+        if($( window ).scrollTop() === 0){
+            $(".self-img").css('opacity' , 0);
+            $(".about-text").css('opacity', 0);
+            console.log('herer');
+        } else {
+            // if about box is visible
+            if(checkVisible($(".about"))){
+                $('.self-img').animate({
+                    opacity: 1,
+                    right:0
+                },1000);
+                $('.about-text').animate({
+                    opacity: 1,
+                    left:0
+                },1000);
+            }
+            
+            // if skills box is visible
+            if(checkVisible($(".skills-content"))){
+               $(".percentage-text").each(function(i,elem){
+                    percentage = $(elem).find('input').val();
+                    $({ Counter: 0 }).animate({ Counter: percentage}, {
+                        duration: 3000,
+                        easing: 'linear',
+                        step: function () {
+                            $(elem).text(Math.ceil(this.Counter));
+                            add_width = (this.Counter*$(elem).parent().width()/100)+'px';
+                            $(elem).parent().find('.percentage').css('width', add_width);
+                        }
+                    }); 
+                });
+            }
+
+            // if contace me box is visible
+            if(checkVisible($(".contact-me"))){
+                 $('.left-content').animate({
+                    opacity: 1,
+                    right:25
+                },1000);
+                $('.right-content').animate({
+                    opacity: 1,
+                    left:25
+                },1000);
+            }
+         
         }
 
-        // if about box is visible
-        if(checkVisible($(".about"))){
-            $('.self-img').animate({
-                opacity: 1,
-                right:0
-            },1000);
-            $('.about-text').animate({
-                opacity: 1,
-                left:0
-            },1000);
-        }
-        
-        // if skills box is visible
-        if(checkVisible($(".skills-content"))){
-           $(".percentage-text").each(function(i,elem){
-                percentage = $(elem).find('input').val();
-                $({ Counter: 0 }).animate({ Counter: percentage}, {
-                    duration: 3000,
-                    easing: 'linear',
-                    step: function () {
-                        $(elem).text(Math.ceil(this.Counter));
-                        add_width = (this.Counter*$(elem).parent().width()/100)+'px';
-                        $(elem).parent().find('.percentage').css('width', add_width);
-                    }
-                }); 
-            });
-        }
-
-        // if contace me box is visible
-        if(checkVisible($(".contact-me"))){
-             $('.left-content').animate({
-                opacity: 1,
-                right:25
-            },1000);
-            $('.right-content').animate({
-                opacity: 1,
-                left:25
-            },1000);
-        }
-
+       
         
     } );
 
@@ -96,7 +99,7 @@ jQuery(document).ready(function($){
 
     setInterval(function(){
         left_slide(current_slide); 
-    },20000);
+    },10000);
 
     function left_slide(slide){
         // if we didn't reach the last slide yet
@@ -122,29 +125,31 @@ jQuery(document).ready(function($){
     }
 
     function right_slide(slide){
-        // if we are not in the first slide
-        if(slide > 1){
-            margin = margin + margin_width;
-            current_slide = slide - 1;
-            $( ".slides-container" ).animate({
-                "margin-left" : margin
-            },800);
-        }
-        else {
-            margin = 0;
-            $(".slides_container").css('margin-left','0');
-        }
+        margin = margin + margin_width;
+        current_slide = slide - 1;
+        $( ".slides-container" ).animate({
+            "margin-left" : margin
+        },800);   
 
     }
 
 
     $(".left-arrow").click(function() {
-        right_slide(current_slide);
+        // if we are not in the first slide
+        if(current_slide > 1){
+            right_slide(current_slide);
+        }else {
+            margin = 0;
+            $(".slides_container").css('margin-left','0');
+            // $(".left-arrow .arrow").css('opacity','0.5');
+        }
     });
 
     $(".right-arrow").click(function() {
         if(current_slide < slides_count){
             left_slide(current_slide);
+       }else {
+            // $(".right-arrow .arrow").css('opacity','0.5');
        }
     });
     
