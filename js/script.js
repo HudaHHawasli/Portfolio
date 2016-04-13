@@ -3,11 +3,15 @@
  */
 jQuery(document).ready(function($){
 
-    // adjust the top of body
+    // adjust the top of body and background image
     height = $(".image-background img").height();
     if(height < 700){
 
         $(".main-container").css('top',height+"px");
+    }
+
+    if(height < $(".image-background").height()){
+        $(".contact-me").css('background','black');
     }
 
     // show header
